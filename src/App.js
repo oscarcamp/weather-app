@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchCity from './components/SearchCity';
 import WeatherReport from './components/WeatherReport';
-import Axios from 'axios';
+import axios from 'axios';
 
 class App extends React.Component {
 	state = {
@@ -9,15 +9,20 @@ class App extends React.Component {
 		report: null,
 	}
 
-	componentDidMount(){
-		Axios.get('https://api.openweathermap.org/data/2.5/weather?q=Lund&units=metric&appid=bbe30c9311e98e6fa36235bc85bcbc36')
-		.then(Response => {
-			console.log(Response)
+
+	handleSearch = city => {
+
+		console.log(city);
+
+		axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=a9f6719e37f20890ebff5d91724dec1f`)
+		.then(response => {
+			console.log(response.data)
 		})
 		.catch(err => {
 			console.error(err)
 		});
 	}
+	
 
 	render() {
 		return (
@@ -27,7 +32,9 @@ class App extends React.Component {
 						<span role="img" aria-label="Weather?">🌦❔</span>
 					</h1>
 
-					<SearchCity />
+					<SearchCity 
+						OnSearch={this.handleSearch}
+					/>
 
 					{
 						this.state.report
