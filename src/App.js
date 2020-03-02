@@ -5,21 +5,20 @@ import axios from 'axios';
 
 class App extends React.Component {
 	state = {
-		errorMessage: false,
 		report: null,
 	}
 
 
 	handleSearch = city => {
 
-		console.log(city);
-
 		axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=a9f6719e37f20890ebff5d91724dec1f`)
 		.then(response => {
-			console.log(response.data)
+			this.setState({
+				report: response.data,
+			});
 		})
 		.catch(err => {
-			console.error(err)
+			console.error(err);
 		});
 	}
 	
@@ -39,7 +38,7 @@ class App extends React.Component {
 					{
 						this.state.report
 						? (
-							<WeatherReport />
+							<WeatherReport report={this.state.report}/>
 						)
 						: ''
 					}
